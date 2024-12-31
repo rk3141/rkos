@@ -24,13 +24,15 @@ pub fn build(b: *std.Build) void {
     // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not
     // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = b.standardOptimizeOption(.{});
+
     const kernel = b.addExecutable(.{
         .name = "kernel.elf",
-        .root_source_file = b.path("src/main.zig"),
+        .root_source_file = b.path("src/init-x86.zig"),
         .target = target,
         .optimize = optimize,
         .code_model = .kernel,
     });
+    kernel.addAssemblyFile(b.path("src/gdt.s"));
     kernel.setLinkerScript(b.path("src/linker.ld"));
 
     // This declares intent for the executable to be installed into the
