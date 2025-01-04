@@ -87,11 +87,3 @@ pub fn idt_init() void {
         : [idtr] "m" (idtr),
     );
 }
-
-// const EntryOptions = packed struct {
-// self: u16,
-
-// inline fn minimal() @This() {
-// return .{ .self = 0b1110_0000_0000 };
-// }
-// };
