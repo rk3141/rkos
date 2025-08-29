@@ -57,6 +57,11 @@ pub fn putCharAt(c: u8, new_color: u8, x: usize, y: usize) void {
 }
 
 pub fn putChar(c: u8) void {
+    if (c == '\n') {
+        col = 0;
+        row += 1;
+        return;
+    }
     putCharAt(c, color, col, row);
     col += 1;
     if (col == VGA_WIDTH) {
