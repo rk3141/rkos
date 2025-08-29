@@ -5,11 +5,14 @@ pub fn kmain() callconv(.C) void {
     vga.initialize();
     vga.setColor(vga.vgaEntryColor(.Black, .Green));
 
-    vga.printf("OK from {s}!", .{"rkos"});
+    for (0..10) |i| {
+        vga.printf("say {d}\n", .{i});
+    }
+    vga.printf("OK from {s}!\n", .{"rkos"});
     gdt.initGdt();
-    vga.printf("OK from {s}!", .{"gdt"});
+    vga.printf("OK from {s}!\n", .{"gdt"});
     idt.idt_init();
-    vga.printf("OK from {s}!", .{"idt"});
+    vga.printf("OK from {s}!\n", .{"idt"});
     hang();
 }
 

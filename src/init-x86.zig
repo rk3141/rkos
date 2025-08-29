@@ -48,5 +48,6 @@ export fn _start() callconv(.Naked) noreturn {
         : [stack_top] "i" (@as([*]align(16) u8, @ptrCast(&stack_bytes)) + @sizeOf(@TypeOf(stack_bytes))),
           // We let the compiler handle the reference to kmain by passing it as an input operand as well.
           [kmain] "X" (&kmain),
+          [initGDT] "X" (&@import("gdt.zig").initGdt),
     );
 }

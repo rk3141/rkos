@@ -45,7 +45,7 @@ pub fn build(b: *std.Build) void {
     // such a dependency.
     const run_cmd = b.addSystemCommand(&[_][]const u8{ "qemu-system-x86_64", "-cdrom", "kernel.iso" });
     const copy_bin_cmd = b.addSystemCommand(&[_][]const u8{ "cp", "zig-out/bin/kernel.elf", "iso/boot/kernel.elf" });
-    const buildiso_cmd = b.addSystemCommand(&[_][]const u8{ "grub-mkrescue", "-o", "kernel.iso", "iso" });
+    const buildiso_cmd = b.addSystemCommand(&[_][]const u8{ "grub2-mkrescue", "-o", "kernel.iso", "iso" });
 
     // By making the run step depend on the install step, it will be run from the
     // installation directory rather than directly from within the cache directory.
