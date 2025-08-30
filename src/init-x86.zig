@@ -23,6 +23,7 @@ export fn _start() callconv(.Naked) noreturn {
         \\ movl %[stack_top], %%esp
         \\ movl %%esp, %%ebp
         \\ cli
+        \\ call %[initGDT:P]
         \\ call %[kmain:P]
         :
         // The stack grows downwards on x86, so we need to point ESP

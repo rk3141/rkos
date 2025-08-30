@@ -13,7 +13,7 @@ fn exception_handler() callconv(.Naked) noreturn {
     );
 }
 
-var isr_stub_table: [32]*const fn () void = .{
+var isr_stub_table: [32]*const fn () callconv(.Naked) void = .{
     isr_no_err_stub,
     isr_no_err_stub,
     isr_no_err_stub,
@@ -48,7 +48,7 @@ var isr_stub_table: [32]*const fn () void = .{
     isr_no_err_stub,
 };
 
-fn isr_err_stub() void {
+fn isr_err_stub() callconv(.Naked) void {
     asm volatile (
         \\call %[exception_handler:P] 
         \\iret
@@ -56,7 +56,7 @@ fn isr_err_stub() void {
         : [exception_handler] "X" (&exception_handler),
     );
 }
-fn isr_no_err_stub() void {
+fn isr_no_err_stub() callconv(.Naked) void {
     asm volatile (
         \\call %[exception_handler:P] 
         \\iret
@@ -65,7 +65,7 @@ fn isr_no_err_stub() void {
     );
 }
 
-fn idt_set_descriptor(vector: usize, isr: *const fn () void, flags: u8) void {
+fn idt_set_descriptor(vector: usize, isr: *const fn () callconv(.Naked) void, flags: u8) void {
     idt_table[vector].isr_low = @truncate(@intFromPtr(isr));
     idt_table[vector].isr_high = @truncate(@intFromPtr(isr) >> 16);
     idt_table[vector].kernel_cs = 0x08;
@@ -89,4 +89,5 @@ pub fn idt_init() void {
         :
         : [idtr] "m" (idtr),
     );
+    // asm volatile ("sti");
 }

@@ -1,5 +1,5 @@
 pub fn kmain() callconv(.C) void {
-    const gdt = @import("gdt.zig");
+    // const gdt = @import("gdt.zig");
     const idt = @import("./idt.zig");
     const vga = @import("./vga.zig");
     vga.initialize();
@@ -9,7 +9,7 @@ pub fn kmain() callconv(.C) void {
         vga.printf("say {d}\n", .{i});
     }
     vga.printf("OK from {s}!\n", .{"rkos"});
-    gdt.initGdt();
+    // gdt.initGdt();
     vga.printf("OK from {s}!\n", .{"gdt"});
     idt.idt_init();
     vga.printf("OK from {s}!\n", .{"idt"});
